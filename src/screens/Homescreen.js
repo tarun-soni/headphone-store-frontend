@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import React, { useEffect } from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
+import CustomCarousel from '../components/CustomCarousel'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
 import ProductCard from '../components/ProductCard'
@@ -21,53 +22,31 @@ const Homescreen = () => {
   return (
     <>
       <Header />
-      <Container className="mt-5">
-        <Row>
+      <Container className="my-2 home-container">
+        {/* <Row>
           <Col md={8}>
             <h3>Our Top Rated Products</h3>
           </Col>
-        </Row>
+        </Row> */}
 
         {loading ? (
           <Loader />
         ) : (
           <>
-            <Row>
-              {topProducts?.getTopRatedProducts.map((product) => (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
-            </Row>
-            {/* <Row>
-            <Col className="align-self-center">
-             
-            </Col>
-          </Row> */}
-          </>
-        )}
-        <Row>
-          <Col md={8}>
-            <h3>All Products</h3>
-          </Col>
-        </Row>
+            <CustomCarousel topProducts={topProducts} />
 
-        {loading ? (
-          <Spinner animation="border" />
-        ) : (
-          <>
             <Row>
-              {allProducts?.getAllProducts.map((product) => (
-                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
+              <Col md={8} className="ml-5">
+                <h3>All Products</h3>
+              </Col>
+              <Row className="mx-5">
+                {allProducts?.getAllProducts.map((product) => (
+                  <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                    <ProductCard product={product} />
+                  </Col>
+                ))}
+              </Row>
             </Row>
-            {/* <Row>
-            <Col className="align-self-center">
-             
-            </Col>
-          </Row> */}
           </>
         )}
       </Container>

@@ -2,3 +2,13 @@
 * {
   font-family: 'Montserrat', sans-serif;
 }
+.home-container {
+  max-width: 100% !important;
+}
+.custom-carousel {
+  margin: 2rem 0;
+  img {
+    object-fit: cover;
+    height: 25rem;
+  }
+}
