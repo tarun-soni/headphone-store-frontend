@@ -28,3 +28,18 @@ export const GET_ALL_PRODUCTS = gql`
     }
   }
 `
+export const GET_SINGLE_PRODUCT = gql`
+  query getSingleProduct($id: ID!) {
+    getSingleProduct(id: $id) {
+      _id
+      user
+      name
+      image
+      description
+      price
+      rating
+      countInStock
+      colors
+    }
+  }
+`

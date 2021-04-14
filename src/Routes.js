@@ -11,11 +11,12 @@ import LoginScreen from './screens/LoginScreen/LoginScreen'
 import Homescreen from './screens/Homescreen'
 import { UserOrderScreen } from './screens/UserOrderScreen'
 import Logout from './components/Logout'
+import SingleProductScreen from './screens/SingleProductScreen'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
 const HOMESCREEN = '/homescreen'
-
+const SINGLE_PRODUCT = '/product/:id'
 const Routes = () => {
   return (
     <Router>
@@ -31,8 +32,9 @@ const Routes = () => {
         <Route path="/" exact>
           <Redirect to={HOMESCREEN} />
         </Route>
+        <Route path={SINGLE_PRODUCT} exact component={SingleProductScreen} />
 
-        <Route path={HOMESCREEN} exact component={Homescreen}></Route>
+        <Route path={HOMESCREEN} exact component={Homescreen} />
 
         <PrivateRoute
           path="/orders"
