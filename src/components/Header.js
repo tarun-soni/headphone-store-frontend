@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
@@ -7,6 +7,9 @@ import { userInfoState } from '../store/login'
 const Header = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)
 
+  useEffect(() => {
+    console.log(`userInfo`, userInfo)
+  }, [userInfo])
   const logoutHandler = () => {}
 
   return (

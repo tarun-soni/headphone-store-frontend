@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Redirect,
@@ -8,23 +8,37 @@ import {
 import PrivateRoute from './components/PrivateRoute'
 import LoggedOutRoute from './components/LoggedOutRoute'
 import LoginScreen from './screens/LoginScreen/LoginScreen'
+import Homescreen from './screens/Homescreen'
+import { UserOrderScreen } from './screens/UserOrderScreen'
+import Logout from './components/Logout'
+
 const LOGIN = '/login'
+const LOGOUT = '/logout'
+const HOMESCREEN = '/homescreen'
 
 const Routes = () => {
-  // todo get current user using token and set local recoil state
-
   return (
     <Router>
       <Switch>
+        <Route path={LOGOUT} exact component={Logout}></Route>
+
         <LoggedOutRoute
           path={LOGIN}
           exact
           component={LoginScreen}
         ></LoggedOutRoute>
 
-        <PrivateRoute path="/" exact>
-          <Redirect to="/homescreen" />
-        </PrivateRoute>
+        <Route path="/" exact>
+          <Redirect to={HOMESCREEN} />
+        </Route>
+
+        <Route path={HOMESCREEN} exact component={Homescreen}></Route>
+
+        <PrivateRoute
+          path="/orders"
+          exact
+          component={UserOrderScreen}
+        ></PrivateRoute>
       </Switch>
     </Router>
   )

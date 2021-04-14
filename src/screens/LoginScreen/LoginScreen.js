@@ -11,8 +11,10 @@ import './loginCss.scss'
 const Login = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)
   const [formData, setFormData] = useState({
-    email: 'admin1@hstore.com',
-    password: '1212'
+    // email: 'admin1@hstore.com',
+    // password: '1212'
+    email: '',
+    password: ''
   })
   const [loading, setLoading] = useState(false)
   const [LoginMutation] = useMutation(LOGIN_USER)
@@ -36,16 +38,31 @@ const Login = () => {
 
         if (res.data.login) {
           console.log(`res.data`, res.data)
+
+          setUserInfo({
+            userId: res.data.login._id,
+            isAuthenticated: true,
+            isAdmin: res.data.login.isAdmin,
+            name: res.data.login.name,
+            email: res.data.login.email
+          })
           localStorage.setItem('loginStatus', true)
-          localStorage.setItem('email', res.data.login.email)
+          // localStorage.setItem('email', res.data.login.email)
           localStorage.setItem('accessToken', res.data.login.token)
-          localStorage.setItem('userId', res.data.login._id)
-          localStorage.setItem('isAdmin  ', res.data.login.isAdmin)
+          // localStorage.setItem('userId', res.data.login._id)
+          // localStorage.setItem('isAdmin  ', res.data.login.isAdmin)
           history.replace('/homescreen')
         }
       })
       .catch((error) => {
         setLoading(false)
+        setUserInfo({
+          userId: null,
+          isAuthenticated: false,
+          isAdmin: false,
+          name: null,
+          email: null
+        })
         console.log(error)
       })
   }
@@ -57,7 +74,7 @@ const Login = () => {
   return (
     <>
       <Container className="form-container">
-        <Form className="login-form align-self-baseline" onClick={handleLogin}>
+        <Form className="login-form align-self-baseline" onSubmit={handleLogin}>
           <Form.Label className='align-baseline"'>Email</Form.Label>
           <Form.Control
             className="w-100 m-2 mb-4"

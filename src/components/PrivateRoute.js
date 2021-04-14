@@ -8,12 +8,10 @@ const PrivateRoute = ({ component: C, ...props }) => {
       {...props}
       render={() => {
         return localStorage.getItem('loginStatus') === 'true' ? (
-          <div className="d-flex flex-row flex-column-fluid page">
-            <div className="d-flex flex-column flex-row-fluid wrapper">
-              <Header />
-              <C />
-            </div>
-          </div>
+          <>
+            <Header />
+            <C />
+          </>
         ) : (
           <Switch>
             <Redirect to="/login" />
