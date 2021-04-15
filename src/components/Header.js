@@ -3,10 +3,13 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
 import { userInfoState } from '../store/login'
-
+import { plsLoginAlert } from '../store/alerts'
+import CustomToast from './CustomToast'
 const Header = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)
-
+  const [showPlsLoginAlert, setShowPlsLoginAlert] = useRecoilState(
+    plsLoginAlert
+  )
   useEffect(() => {
     console.log(`userInfo`, userInfo)
   }, [userInfo])
@@ -20,6 +23,14 @@ const Header = () => {
         expand="lg"
         collapseOnSelect
       >
+        {/* {showPlsLoginAlert && (
+          <CustomToast
+            variant="danger"
+            onClose={() => setShowPlsLoginAlert(false)}
+            msg="Please Login to add Books"
+          />
+        )} */}
+
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Headphone Store</Navbar.Brand>

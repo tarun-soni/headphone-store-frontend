@@ -1,5 +1,12 @@
 import { useQuery } from '@apollo/client'
-import { Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
+import {
+  Col,
+  Container,
+  Image,
+  Jumbotron,
+  ListGroup,
+  Row
+} from 'react-bootstrap'
 import { useParams } from 'react-router'
 import BackButton from '../components/BackButton'
 import Loader from '../components/Loader'
@@ -17,28 +24,47 @@ const SingleProductScreen = () => {
   return (
     <>
       <Header />
-      <Container>
-        <BackButton to={'/'} />
-
+      <Container></Container>
+      <Container className="home-container">
+        {/* <BackButton to={'/'} /> */}
         {loading ? (
           <Loader />
         ) : (
           <>
-            <Row>
-              <Col md={6}>
-                <Image
-                  src={data?.getSingleProduct?.image}
-                  alt={data?.getSingleProduct?.name}
-                  fluid
-                />
-              </Col>
-              <Col md={6}>
-                <ListGroup variant="flush">
-                  {/* <ListGroup.Item> */}
+            <Row className="force-block">
+              <Jumbotron
+                className="banner banner-wrap"
+                style={{
+                  backgroundImage: `url("https://gavinsgadgets.files.wordpress.com/2016/02/img_4654.jpg?w=604&zoom=2  ")`,
+                  backgroundSize: 'cover',
+                  opacity: '0.9',
+                  backgroundPosition: 'center center'
+                }}
+              >
+                <div className="jumbotron-content">
+                  <BackButton to={'/'} />
+
                   <h3 className="lspace-small">
                     {data?.getSingleProduct?.name}
                   </h3>
-                  {/* </ListGroup.Item> */}
+                  <Image
+                    style={{
+                      width: '25rem',
+                      height: 'auto',
+                      objectFit: 'cover'
+                    }}
+                    src={data?.getSingleProduct?.image}
+                    alt={data?.getSingleProduct?.name}
+                    fluid
+                  />
+                </div>
+              </Jumbotron>
+
+              {/* <Col md={6}>
+                <ListGroup variant="flush">
+                  <h3 className="lspace-small">
+                    {data?.getSingleProduct?.name}
+                  </h3>
                   <ListGroup.Item>
                     Price: ${data?.getSingleProduct?.price}
                   </ListGroup.Item>
@@ -56,7 +82,7 @@ const SingleProductScreen = () => {
                     </ListGroup.Item>
                   </ListGroup>
                 </Row>
-              </Col>
+              </Col> */}
             </Row>
           </>
         )}

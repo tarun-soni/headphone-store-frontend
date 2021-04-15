@@ -1,16 +1,24 @@
 import { useQuery } from '@apollo/client'
 import React, { useEffect } from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
+import { useRecoilState } from 'recoil'
 import CustomCarousel from '../components/CustomCarousel'
+import CustomToast from '../components/CustomToast'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
+import Logout from '../components/Logout'
 import ProductCard from '../components/ProductCard'
 import {
   GET_ALL_PRODUCTS,
   GET_TOP_RATED_PRODS
 } from '../graphql/product/queries'
+import { plsLoginAlert } from '../store/alerts'
+
 const Homescreen = () => {
-  const { error, data: topProducts } = useQuery(GET_TOP_RATED_PRODS)
+  const [, setShowPlsLoginAlert] = useRecoilState(plsLoginAlert)
+  const { loading: topLoading, data: topProducts, error: topError } = useQuery(
+    GET_TOP_RATED_PRODS
+  )
   const { loading, error: allError, data: allProducts } = useQuery(
     GET_ALL_PRODUCTS
   )
@@ -19,18 +27,25 @@ const Homescreen = () => {
   //   console.log(`topProducts`, topProducts)
   //   console.log(`all`, allProducts)
   // }, [topProducts])
+
+  if (allError || topError) {
+  }
+
   return (
     <>
       <Header />
       <Container className="my-2 home-container">
-        {/* <Row>
-          <Col md={8}>
-            <h3>Our Top Rated Products</h3>
-          </Col>
-        </Row> */}
-
         {loading ? (
           <Loader />
+        ) : allError || topError ? (
+          <>
+            <CustomToast
+              variant="danger"
+              onClose={() => setShowPlsLoginAlert(false)}
+              msg="Please Login Again"
+            />
+            <Logout />
+          </>
         ) : (
           <>
             <CustomCarousel topProducts={topProducts} />
