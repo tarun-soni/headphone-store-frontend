@@ -23,7 +23,7 @@ const SingleProductScreen = () => {
   const { id } = useParams()
   const history = useHistory()
   const [qty, setQty] = useState(1)
-  const [cartItems, setCartItems] = useRecoilState(cartState)
+  const [cart, setCart] = useRecoilState(cartState)
   const { loading, data, error } = useQuery(GET_SINGLE_PRODUCT, {
     variables: {
       id: id
@@ -32,8 +32,33 @@ const SingleProductScreen = () => {
   if (error) console.log(`error in single prod`, error)
 
   const addToCartHandler = () => {
-    localStorage.setItem('cartItems', JSON.stringify(data?.getSingleProduct))
-    // setCartItems
+    const item = {
+      product: id,
+      name: data?.getSingleProduct?.name,
+      image: data?.getSingleProduct?.image,
+      price: data?.getSingleProduct?.price,
+      countInStock: data?.getSingleProduct?.countInStock,
+      qty
+    }
+
+    const existItem = cart.cartItems.find((x) => x.product === item.product)
+
+    if (existItem) {
+      setCart({
+        ...cart,
+        cartItems: cart.cartItems.map((x) =>
+          x.product === existItem.product ? item : x
+        )
+      })
+    } else {
+      setCart({
+        ...cart,
+        cartItems: [...cart.cartItems, item]
+      })
+    }
+    console.log(`cart`, cart)
+    localStorage.setItem('cartItems', JSON.stringify(cart))
+
     history.push(`/cart/${id}?qty=${qty}`)
   }
 
