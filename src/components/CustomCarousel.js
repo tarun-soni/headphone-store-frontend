@@ -14,7 +14,11 @@ const CustomCarousel = ({ topProducts }) => {
               history.push(`/product/${product._id}`)
             }}
           >
-            <img className="d-block w-100" src={product.image} />
+            <img
+              className="d-block w-100"
+              src={product.image}
+              alt={product.name}
+            />
             <Carousel.Caption>
               <h3>{product.name}</h3>
               <p>{product.description}</p>

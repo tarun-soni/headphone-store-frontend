@@ -4,15 +4,12 @@ import { Button, Container, Form } from 'react-bootstrap'
 import { Redirect, useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { LOGIN_USER } from '../../graphql/user/mutations'
-
 import { userInfoState } from '../../store/login'
 import './loginCss.scss'
 
 const Login = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState)
   const [formData, setFormData] = useState({
-    // email: 'admin1@hstore.com',
-    // password: '1212'
     email: '',
     password: ''
   })

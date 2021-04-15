@@ -13,7 +13,9 @@ const Header = () => {
   useEffect(() => {
     console.log(`userInfo`, userInfo)
   }, [userInfo])
-  const logoutHandler = () => {}
+  const logoutHandler = () => {
+    window.location.replace('/logout')
+  }
 
   return (
     <>
@@ -39,15 +41,17 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <i className="fas fa-shopping-cart px-1"></i>
-                  CART
-                </Nav.Link>
-              </LinkContainer>
+              {userInfo?.isAuthenticated && (
+                <LinkContainer to="/cart">
+                  <Nav.Link>
+                    <i className="fas fa-shopping-cart px-1"></i>
+                    VIEW MY CART
+                  </Nav.Link>
+                </LinkContainer>
+              )}
 
-              {userInfo.isAuthenticated ? (
-                <NavDropdown title={userInfo.name?.toUpperCase()} id="username">
+              {userInfo.isAuthenticated && !userInfo.isAdmin ? (
+                <NavDropdown title={userInfo.name.toUpperCase()} id="username">
                   <LinkContainer to="/my-orders">
                     <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>
@@ -55,6 +59,8 @@ const Header = () => {
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
+              ) : userInfo.isAdmin ? (
+                <></>
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
@@ -67,13 +73,16 @@ const Header = () => {
               {userInfo?.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenu">
                   <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
+                    <NavDropdown.Item>All Users</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
+                    <NavDropdown.Item>All Products</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                    <NavDropdown.Item>All Orders</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/logout">
+                    <NavDropdown.Item>LOGOUT</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}
