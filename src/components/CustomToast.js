@@ -59,4 +59,9 @@ const CustomToast = ({ onClose, variant, msg }) => {
   )
 }
 
+CustomToast.defaultProps = {
+  onClose: () => {
+    return null
+  }
+}
 export default CustomToast

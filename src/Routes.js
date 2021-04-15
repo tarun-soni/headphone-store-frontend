@@ -12,6 +12,7 @@ import Homescreen from './screens/Homescreen'
 import { UserOrderScreen } from './screens/UserOrderScreen'
 import Logout from './components/Logout'
 import SingleProductScreen from './screens/SingleProductScreen'
+import CartScreen from './screens/CartScreen'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
@@ -35,6 +36,7 @@ const Routes = () => {
         <Route path={SINGLE_PRODUCT} exact component={SingleProductScreen} />
 
         <Route path={HOMESCREEN} exact component={Homescreen} />
+        <PrivateRoute path="/cart/:id?" component={CartScreen} />
 
         <PrivateRoute
           path="/orders"

@@ -25,6 +25,7 @@ export const GET_ALL_PRODUCTS = gql`
       price
       countInStock
       colors
+      bgimage
     }
   }
 `
@@ -40,6 +41,7 @@ export const GET_SINGLE_PRODUCT = gql`
       rating
       countInStock
       colors
+      bgimage
     }
   }
 `
