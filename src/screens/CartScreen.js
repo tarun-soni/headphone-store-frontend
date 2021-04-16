@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import {
   Row,
@@ -9,25 +10,82 @@ import {
   Card,
   Container
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import BackButton from '../components/BackButton'
 import CustomToast from '../components/CustomToast'
+import { CREATE_ORDER } from '../graphql/order/mutation'
 import { cartState } from '../store/cart'
+import { userInfoState } from '../store/login'
 
 const CartScreen = () => {
+  const history = useHistory()
+  const [loading, setLoading] = useState(false)
+  const [totalPrice, setTotalPrice] = useState(0)
   const [cart, setCart] = useRecoilState(cartState)
-  useEffect(() => {
-    console.log(`cart`, cart)
-  }, [cartState])
-
+  const [userInfo] = useRecoilState(userInfoState)
+  const [createOrder] = useMutation(CREATE_ORDER)
   const removeFromCartHandler = (id) => {
     setCart({
       ...cart,
       cartItems: cart.cartItems.filter((x) => x.product !== id)
     })
   }
-  const checkoutHandler = () => {}
+  const placeOrderHandler = () => {
+    let today = new Date()
+    let dd = String(today.getDate()).padStart(2, '0')
+    let mm = String(today.getMonth() + 1).padStart(2, '0')
+    let yyyy = today.getFullYear()
+    today = dd + mm + yyyy
+
+    console.log(`cart.cartItems`, cart.cartItems)
+    console.log(`cart.shippingAddress`, cart.shippingAddress)
+
+    let _orderItems = []
+    cart.cartItems.map((item) => {
+      _orderItems.push({
+        qty: Number(item.qty),
+        name: item.name,
+        image: item.image,
+        productId: item.product,
+        price: item.price
+      })
+    })
+
+    console.log(`_orderItems`, _orderItems)
+    createOrder({
+      variables: {
+        userId: userInfo.userId,
+        totalPrice: Number(totalPrice),
+        orderItems: _orderItems,
+        shippingAddress: cart.shippingAddress,
+        isPaid: true,
+        paidAt: today
+      }
+    })
+      .then((res) => {
+        setLoading(false)
+
+        // todo redirect to /order/:id
+        setCart({
+          ...cart,
+          cartItems: []
+        })
+        console.log(`res`, res)
+      })
+      .catch((error) => {
+        //todo show error custom toast
+        setLoading(false)
+        console.log(error)
+      })
+  }
+  useEffect(() => {
+    setTotalPrice(
+      cart.cartItems
+        .reduce((acc, item) => acc + item.qty * item.price, 0)
+        .toFixed(2)
+    )
+  }, [cart])
   return (
     <>
       <Container className="my-5 mx-6">
@@ -92,21 +150,33 @@ const CartScreen = () => {
                       )}
                     ) items
                   </h3>
-                  <h3 className="lspace-small">
-                    ₹{' '}
-                    {cart.cartItems
-                      .reduce((acc, item) => acc + item.qty * item.price, 0)
-                      .toFixed(2)}
-                  </h3>
+                  <h3 className="lspace-small">₹ {totalPrice}</h3>
                 </ListGroup.Item>
+                <ListGroup.Item>
+                  <Form>
+                    <Form.Group controlId="address">
+                      <Form.Label>Shipping Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter address"
+                        value={cart.shippingAddress}
+                        required
+                        onChange={(e) =>
+                          setCart({ ...cart, shippingAddress: e.target.value })
+                        }
+                      ></Form.Control>
+                    </Form.Group>
+                  </Form>
+                </ListGroup.Item>
+
                 <ListGroup.Item>
                   <Button
                     type="button"
                     className="btn-block"
                     disabled={cart.cartItems.length === 0}
-                    onClick={checkoutHandler}
+                    onClick={placeOrderHandler}
                   >
-                    Proceed To Checkout
+                    Place Order
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

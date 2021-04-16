@@ -37,6 +37,7 @@ const Routes = () => {
 
         <Route path={HOMESCREEN} exact component={Homescreen} />
         <PrivateRoute path="/cart/:id?" component={CartScreen} />
+        {/* <PrivateRoute path="/order/:orderid" component={CartScreen} /> */}
 
         <PrivateRoute
           path="/orders"

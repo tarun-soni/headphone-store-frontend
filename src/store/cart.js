@@ -5,6 +5,6 @@ export const cartState = atom({
 
   default: {
     cartItems: [],
-    shippingAddress: null
+    shippingAddress: 'some random address'
   }
 })
