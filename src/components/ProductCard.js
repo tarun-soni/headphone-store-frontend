@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
           className="d-flex justify-content-between"
         ></Card.Text>
 
-        <Card.Text as="h4">${product.price}</Card.Text>
+        <Card.Text as="h4">₹ {product.price}</Card.Text>
       </Card.Body>
     </Card>
   )

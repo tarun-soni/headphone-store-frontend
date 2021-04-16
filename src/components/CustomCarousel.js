@@ -8,6 +8,7 @@ const CustomCarousel = ({ topProducts }) => {
       <Carousel className="custom-carousel">
         {topProducts?.getTopRatedProducts.map((product) => (
           <Carousel.Item
+            key={product._id}
             interval={5000}
             onClick={(e) => {
               e.preventDefault()

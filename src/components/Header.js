@@ -10,9 +10,7 @@ const Header = () => {
   const [showPlsLoginAlert, setShowPlsLoginAlert] = useRecoilState(
     plsLoginAlert
   )
-  useEffect(() => {
-    console.log(`userInfo`, userInfo)
-  }, [userInfo])
+
   const logoutHandler = () => {
     window.location.replace('/logout')
   }

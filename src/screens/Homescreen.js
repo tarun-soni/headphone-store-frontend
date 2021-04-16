@@ -12,10 +12,8 @@ import {
   GET_ALL_PRODUCTS,
   GET_TOP_RATED_PRODS
 } from '../graphql/product/queries'
-import { plsLoginAlert } from '../store/alerts'
 
 const Homescreen = () => {
-  const [, setShowPlsLoginAlert] = useRecoilState(plsLoginAlert)
   const { loading: topLoading, data: topProducts, error: topError } = useQuery(
     GET_TOP_RATED_PRODS
   )
@@ -39,11 +37,7 @@ const Homescreen = () => {
           <Loader />
         ) : allError || topError ? (
           <>
-            <CustomToast
-              variant="danger"
-              onClose={() => setShowPlsLoginAlert(false)}
-              msg="Please Login Again"
-            />
+            <CustomToast variant="danger" msg="Please Login Again" />
             <Logout />
           </>
         ) : (

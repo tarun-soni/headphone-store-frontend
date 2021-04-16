@@ -17,18 +17,15 @@ import { cartState } from '../store/cart'
 
 const CartScreen = () => {
   const [cart, setCart] = useRecoilState(cartState)
-  const [cartToDisplay] = useState(JSON.parse(localStorage.cartItems))
   useEffect(() => {
     console.log(`cart`, cart)
-    console.log(`localStorage.cart`, JSON.parse(localStorage.cartItems))
-  }, [])
+  }, [cartState])
 
   const removeFromCartHandler = (id) => {
     setCart({
       ...cart,
       cartItems: cart.cartItems.filter((x) => x.product !== id)
     })
-    localStorage.setItem('cartItems', JSON.stringify(cart))
   }
   const checkoutHandler = () => {}
   return (
@@ -44,7 +41,7 @@ const CartScreen = () => {
               </>
             ) : (
               <ListGroup variant="flush">
-                {cart.cartItems.map((item) => (
+                {cart.cartItems?.map((item) => (
                   <ListGroup.Item key={item.product}>
                     <Row>
                       <Col md={2}>
@@ -61,22 +58,11 @@ const CartScreen = () => {
                         </h5>
                       </Col>
                       <Col md={2}>
-                        <h4>${item.price} </h4>
+                        <h4>{item.price} </h4>
                       </Col>
+
                       <Col md={2}>
-                        <Form.Control
-                          as="select"
-                          value={item.qty}
-                          // onChange={(e) =>
-                          //
-                          // }
-                        >
-                          {[...Array(item.countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                        <h4> x {item.qty} </h4>
                       </Col>
                       <Col md={2}>
                         <Button
@@ -99,16 +85,19 @@ const CartScreen = () => {
                 <ListGroup.Item>
                   <h3>
                     Subtotal (
-                    {cart.cartItems.reduce(
-                      (acc, item) => acc + Number(item.qty),
-                      0
-                    )}
+                    {cart?.cartItems !== [] &&
+                      cart?.cartItems?.reduce(
+                        (acc, item) => acc + Number(item.qty),
+                        0
+                      )}
                     ) items
                   </h3>
-                  $
-                  {cart.cartItems
-                    .reduce((acc, item) => acc + item.qty * item.price, 0)
-                    .toFixed(2)}
+                  <h3 className="lspace-small">
+                    ₹{' '}
+                    {cart.cartItems
+                      .reduce((acc, item) => acc + item.qty * item.price, 0)
+                      .toFixed(2)}
+                  </h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Button

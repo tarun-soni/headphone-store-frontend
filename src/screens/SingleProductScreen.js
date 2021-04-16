@@ -56,8 +56,6 @@ const SingleProductScreen = () => {
         cartItems: [...cart.cartItems, item]
       })
     }
-    console.log(`cart`, cart)
-    localStorage.setItem('cartItems', JSON.stringify(cart))
 
     history.push(`/cart/${id}?qty=${qty}`)
   }
