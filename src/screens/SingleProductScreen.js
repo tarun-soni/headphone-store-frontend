@@ -111,6 +111,12 @@ const SingleProductScreen = () => {
                     <ListGroup.Item>
                       Description: {data?.getSingleProduct?.description}
                     </ListGroup.Item>
+                    <ListGroup.Item>
+                      Colors Available{' '}
+                      {data?.getSingleProduct?.colors.map((c) => (
+                        <Color color={c} />
+                      ))}
+                    </ListGroup.Item>
                   </ListGroup>
                 </Col>
 
@@ -186,3 +192,36 @@ const SingleProductScreen = () => {
 }
 
 export default SingleProductScreen
+
+const Color = ({ color }) => {
+  const C = {
+    RED: '#DD4949',
+    WHITE: '#FAFAFA',
+    BLACK: '#222',
+    BLUE: '#4C82EB',
+    YELLOW: '#E9EC5A',
+    GREEN: '#4BE551'
+  }
+  return (
+    <svg
+      style={{
+        margin: '0.2rem'
+      }}
+      width="30"
+      height="81"
+      viewBox="0 0 81 81"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle
+        cx="40.5"
+        cy="40.5"
+        r="39"
+        // fill={`${colorToPass}`}
+        fill={C[color]}
+        stroke="#DBDBDB"
+        stroke-width="5"
+      />
+    </svg>
+  )
+}
