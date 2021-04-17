@@ -23,14 +23,6 @@ const Header = () => {
         expand="lg"
         collapseOnSelect
       >
-        {/* {showPlsLoginAlert && (
-          <CustomToast
-            variant="danger"
-            onClose={() => setShowPlsLoginAlert(false)}
-            msg="Please Login to add Books"
-          />
-        )} */}
-
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Headphone Store</Navbar.Brand>
@@ -50,7 +42,7 @@ const Header = () => {
 
               {userInfo.isAuthenticated && !userInfo.isAdmin ? (
                 <NavDropdown title={userInfo.name.toUpperCase()} id="username">
-                  <LinkContainer to="/my-orders">
+                  <LinkContainer to="/myorders">
                     <NavDropdown.Item>My Orders</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>

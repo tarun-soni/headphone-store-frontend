@@ -28,8 +28,7 @@ export const CREATE_ORDER = gql`
       shippingAddress
       totalPrice
       isPaid
-      deliveredAt
-      isDelivered
+
       paidAt
     }
   }

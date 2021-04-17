@@ -20,6 +20,7 @@ import { userInfoState } from '../store/login'
 
 const CartScreen = () => {
   const history = useHistory()
+  const [orderDone, setOrderDone] = useState(false)
   const [loading, setLoading] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [cart, setCart] = useRecoilState(cartState)
@@ -65,8 +66,8 @@ const CartScreen = () => {
     })
       .then((res) => {
         setLoading(false)
-
-        // todo redirect to /order/:id
+        setOrderDone(true)
+        history.push('/myorders')
         setCart({
           ...cart,
           cartItems: []
@@ -89,6 +90,7 @@ const CartScreen = () => {
   return (
     <>
       <Container className="my-5 mx-6">
+        {orderDone && <CustomToast variant="success" msg="ORER SUCCESSFUL" />}
         <h3>Shopping Cart</h3>
         <BackButton to="/" />
         <Row>

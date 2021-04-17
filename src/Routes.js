@@ -9,10 +9,11 @@ import PrivateRoute from './components/PrivateRoute'
 import LoggedOutRoute from './components/LoggedOutRoute'
 import LoginScreen from './screens/LoginScreen/LoginScreen'
 import Homescreen from './screens/Homescreen'
-import { UserOrderScreen } from './screens/UserOrderScreen'
+import OrderScreen from './screens/OrderScreen'
 import Logout from './components/Logout'
 import SingleProductScreen from './screens/SingleProductScreen'
 import CartScreen from './screens/CartScreen'
+import MyOrdersScreen from './screens/MyOrdersScreen'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
@@ -37,12 +38,16 @@ const Routes = () => {
 
         <Route path={HOMESCREEN} exact component={Homescreen} />
         <PrivateRoute path="/cart/:id?" component={CartScreen} />
-        {/* <PrivateRoute path="/order/:orderid" component={CartScreen} /> */}
 
         <PrivateRoute
-          path="/orders"
+          path="/order/:orderid"
           exact
-          component={UserOrderScreen}
+          component={OrderScreen}
+        ></PrivateRoute>
+        <PrivateRoute
+          path="/myorders"
+          exact
+          component={MyOrdersScreen}
         ></PrivateRoute>
       </Switch>
     </Router>
