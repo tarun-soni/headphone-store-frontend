@@ -6,6 +6,7 @@ import Loader from '../components/Loader'
 import { useQuery } from '@apollo/client'
 import { GET_MY_ORDERS } from '../graphql/order/queries'
 import { useEffect, useState } from 'react'
+import { getDate } from '../getDate'
 
 const MyOrdersScreen = () => {
   const [orders, setOrders] = useState([])
@@ -44,7 +45,7 @@ const MyOrdersScreen = () => {
                 {orders?.map((order) => (
                   <tr key={order._id} className="text-center">
                     <td>{order._id}</td>
-                    <td>{order.paidAt}</td>
+                    <td>{order?.paidAt && getDate(String(order.paidAt))}</td>
                     <td>{order.totalPrice}</td>
                     <td>
                       {order.isPaid ? (

@@ -14,6 +14,8 @@ import Logout from './components/Logout'
 import SingleProductScreen from './screens/SingleProductScreen'
 import CartScreen from './screens/CartScreen'
 import MyOrdersScreen from './screens/MyOrdersScreen'
+import AdminOrderList from './screens/AdminOrderList'
+import AdminProductList from './screens/AdminProductList'
 
 const LOGIN = '/login'
 const LOGOUT = '/logout'
@@ -48,6 +50,16 @@ const Routes = () => {
           path="/myorders"
           exact
           component={MyOrdersScreen}
+        ></PrivateRoute>
+        <PrivateRoute
+          path="/admin/orderList"
+          exact
+          component={AdminOrderList}
+        ></PrivateRoute>
+        <PrivateRoute
+          path="/admin/productlist"
+          exact
+          component={AdminProductList}
         ></PrivateRoute>
       </Switch>
     </Router>

@@ -1,24 +1,31 @@
-// query Query {
-//   getAllOrders {
-//     _id
-//     userId
-//     orderItems {
-//       price
-//       image
-//       qty
-//       name
-//       productId
-//     }
-//     shippingAddress
-//     isPaid
-//     totalPrice
-//     paidAt
-//     isDelivered
-//     deliveredAt
-//   }
-// }
-
 import gql from 'graphql-tag'
+
+export const GET_ALL_ORDERS = gql`
+  query getAllOrders {
+    getAllOrders {
+      _id
+
+      orderItems {
+        price
+        image
+        qty
+        name
+        productId
+      }
+      userId {
+        name
+        email
+        _id
+      }
+      shippingAddress
+      isPaid
+      totalPrice
+      paidAt
+      isDelivered
+      deliveredAt
+    }
+  }
+`
 
 export const GET_ORDER_BY_ID = gql`
   query getOrderById($id: ID!) {
