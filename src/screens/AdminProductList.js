@@ -2,18 +2,41 @@ import { useMutation, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Button, Table, Row, Col, Container } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { useRecoilState } from 'recoil'
 import BackButton from '../components/BackButton'
+import CreateProductModal from '../components/CreateProductModal'
 import CustomToast from '../components/CustomToast'
 import Loader from '../components/Loader'
-import { DELETE_PRODUCT } from '../graphql/product/mutations'
+import { CREATE_PRODUCT, DELETE_PRODUCT } from '../graphql/product/mutations'
 import { GET_ALL_PRODUCTS } from '../graphql/product/queries'
+
+import { userInfoState } from '../store/login'
 const AdminProductList = () => {
+  const [modalShow, setModalShow] = useState(false)
+  const [created, setCreated] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const { loading: loadingProducts, error, data } = useQuery(GET_ALL_PRODUCTS)
   const [deleteProduct] = useMutation(DELETE_PRODUCT)
-  const createProductHandler = () => {}
+  const [createProduct] = useMutation(CREATE_PRODUCT)
+  const [userInfo] = useRecoilState(userInfoState)
+  const [color, setColor] = useState(['RED', 'BLACK'])
+  const [productData, setProductData] = useState({
+    name: 'Sony Headphones',
+    description: 'Bass heavy and for the music lovers',
+    rating: 5,
+    price: 2599,
+    countInStock: 12,
+    bgimage:
+      'https://images.pexels.com/photos/358103/pexels-photo-358103.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    image:
+      'https://images.pexels.com/photos/164710/pexels-photo-164710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+  })
+
+  const createProductHandler = () => {
+    setModalShow(true)
+  }
 
   const deleteHandler = (id) => {
     setLoading(true)
@@ -21,11 +44,7 @@ const AdminProductList = () => {
       variables: {
         id
       },
-      refetchQueries: [
-        {
-          query: GET_ALL_PRODUCTS
-        }
-      ],
+      refetchQueries: [{ query: GET_ALL_PRODUCTS }],
       awaitRefetchQueries: true
     })
       .then((res) => {
@@ -39,12 +58,68 @@ const AdminProductList = () => {
         console.log(`delete error `, error)
       })
   }
+
+  const submitProduct = () => {
+    createProduct({
+      variables: {
+        User: userInfo.userId,
+        Name: productData.name,
+        Image: productData.image,
+        Description: productData.description,
+        Bgimage: productData.bgimage,
+        Rating: productData.rating,
+        Price: productData.price,
+        CountInStock: productData.countInStock,
+        Colors: color
+      },
+      refetchQueries: [{ query: GET_ALL_PRODUCTS }],
+      awaitRefetchQueries: true
+    })
+      .then((res) => {
+        setLoading(false)
+        console.log(`res`, res)
+        if (res?.data?.createProduct?._id) {
+          setCreated(true)
+        }
+      })
+      .catch((error) => {
+        setCreated(false)
+        console.log(`delete error `, error)
+      })
+
+    setModalShow(false)
+  }
+
   useEffect(() => {
     setProducts(data?.getAllProducts)
   }, [data])
   return (
     <Container className="m3">
-      {deleted && <CustomToast variant="info" msg="Product Deleted" />}
+      {modalShow && (
+        <CreateProductModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          submitProduct={submitProduct}
+          productData={productData}
+          setProductData={setProductData}
+          color={color}
+          setColor={setColor}
+        />
+      )}
+      {deleted && (
+        <CustomToast
+          variant="info"
+          msg="Product Deleted"
+          onClose={() => setDeleted(false)}
+        />
+      )}
+      {created && (
+        <CustomToast
+          variant="success"
+          msg="New Product Created"
+          onClose={() => setCreated(false)}
+        />
+      )}
 
       <BackButton to="/" />
       <Row className="align-items-center">
