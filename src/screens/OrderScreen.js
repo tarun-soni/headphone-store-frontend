@@ -8,7 +8,7 @@ import { userInfoState } from '../store/login'
 
 import { Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import { getDate } from '../getDate'
 const OrderScreen = () => {
   const [orderData, setOrderData] = useState([])
   const { orderid } = useParams()
@@ -22,7 +22,6 @@ const OrderScreen = () => {
 
   useEffect(() => {
     setOrderData(data?.getOrderById)
-    console.log(` data?.getOrderById`, data?.getOrderById)
   }, [data])
 
   return loading ? (
@@ -30,7 +29,6 @@ const OrderScreen = () => {
   ) : error ? (
     <></>
   ) : (
-    // <Message variant="danger">{error}</Message>
     <div style={{ margin: '2rem 8rem' }}>
       <Link
         to={userInfo?.isAdmin ? '/admin/orderlist' : '/myorders'}
@@ -48,19 +46,21 @@ const OrderScreen = () => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
-                <strong>Name: </strong> {orderData?.userId?.name}
+                <strong className="lspace-small">Name: </strong>{' '}
+                {orderData?.userId?.name}
               </p>
               <p>
-                <strong>Email: </strong> {orderData?.user?.email}
+                <strong className="lspace-small">Email: </strong>{' '}
+                {orderData?.userId?.email}
               </p>
               <p>
-                <strong>Address:</strong>
+                <strong className="lspace-small">Address: </strong>
                 {orderData?.shippingAddress}
               </p>
               {orderData?.isDelivered ? (
                 <h4>Delivered on {orderData?.deliveredAt}</h4>
               ) : (
-                <h3>Not Delivered</h3>
+                <h4 style={{ color: 'red' }}>Not Delivered</h4>
               )}
             </ListGroup.Item>
 
@@ -68,14 +68,16 @@ const OrderScreen = () => {
               <h3>Payment </h3>
 
               {orderData?.isPaid ? (
-                <h4>Paid on {orderData?.paidAt}</h4>
+                <>
+                  <h4>Paid on : {getDate(String(orderData?.paidAt))} </h4>
+                </>
               ) : (
-                <h4>Not Paid</h4>
+                <h4 style={{ color: 'red' }}>Not Paid</h4>
               )}
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h3>order Items</h3>
+              <h3>Order Items</h3>
               {orderData?.orderItems?.length === 0 ? (
                 <h4>Order is empty</h4>
               ) : (

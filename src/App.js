@@ -11,10 +11,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { userInfoState } from './store/login'
 import { useRecoilState } from 'recoil'
-const API_URL = 'https://headphone-store-backend.herokuapp.com/graphql'
-
-console.log(`${API_URL}`)
-
+const API_URL = `${process.env.REACT_APP_BACKEND_URL}/graphql`
 const httpLink = createHttpLink({
   uri: API_URL
 })
@@ -41,7 +38,7 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('loginStatus') === 'true') {
       axios
-        .get(`http://localhost:4000/api/users/me`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }

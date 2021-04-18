@@ -7,6 +7,7 @@ import BackButton from '../components/BackButton'
 import CreateProductModal from '../components/CreateProductModal'
 import CustomToast from '../components/CustomToast'
 import Loader from '../components/Loader'
+import { GET_MY_ORDERS } from '../graphql/order/queries'
 import { CREATE_PRODUCT, DELETE_PRODUCT } from '../graphql/product/mutations'
 import { GET_ALL_PRODUCTS } from '../graphql/product/queries'
 
@@ -72,7 +73,12 @@ const AdminProductList = () => {
         CountInStock: productData.countInStock,
         Colors: color
       },
-      refetchQueries: [{ query: GET_ALL_PRODUCTS }],
+      refetchQueries: [
+        {
+          query: GET_ALL_PRODUCTS
+        },
+        { query: GET_MY_ORDERS }
+      ],
       awaitRefetchQueries: true
     })
       .then((res) => {
@@ -124,7 +130,7 @@ const AdminProductList = () => {
       <BackButton to="/" />
       <Row className="align-items-center">
         <Col>
-          <h3>Products</h3>
+          <h3> All Products</h3>
         </Col>
         <Col className="text-right">
           <Button className="my-3" onClick={createProductHandler}>

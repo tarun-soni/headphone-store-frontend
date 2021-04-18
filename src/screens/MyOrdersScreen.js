@@ -33,9 +33,9 @@ const MyOrdersScreen = () => {
               <thead className="text-center">
                 <tr>
                   <th>ID</th>
-                  <th>Date</th>
+                  <th>Order Date </th>
                   <th>Total</th>
-                  <th>Paid</th>
+                  <th>Paid At</th>
                   <th>Delivered</th>
                   <th></th>
                 </tr>
@@ -45,10 +45,10 @@ const MyOrdersScreen = () => {
                   <tr key={order._id} className="text-center">
                     <td>{order._id}</td>
                     <td>{order?.paidAt && getDate(String(order.paidAt))}</td>
-                    <td>{order.totalPrice}</td>
+                    <td className="lspace-small"> ₹ {order.totalPrice}</td>
                     <td>
                       {order.isPaid ? (
-                        order.paidAt
+                        getDate(String(order.paidAt))
                       ) : (
                         <i
                           className="fas fa-times"

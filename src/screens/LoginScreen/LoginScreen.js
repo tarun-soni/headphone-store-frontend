@@ -35,8 +35,6 @@ const Login = () => {
         setLoading(false)
 
         if (res.data.login) {
-          console.log(`res.data`, res.data)
-
           setUserInfo({
             userId: res.data.login._id,
             isAuthenticated: true,

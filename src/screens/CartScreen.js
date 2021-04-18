@@ -16,12 +16,13 @@ import BackButton from '../components/BackButton'
 import CustomToast from '../components/CustomToast'
 import Loader from '../components/Loader'
 import { CREATE_ORDER } from '../graphql/order/mutation'
-import { cartState } from '../store/cart'
+import { cartState, orderDoneState } from '../store/cart'
 import { userInfoState } from '../store/login'
 
 const CartScreen = () => {
   const history = useHistory()
-  const [orderDone, setOrderDone] = useState(false)
+
+  const [, setOrderDone] = useRecoilState(orderDoneState)
   const [loading, setLoading] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [cart, setCart] = useRecoilState(cartState)
@@ -40,9 +41,6 @@ const CartScreen = () => {
     let yyyy = today.getFullYear()
     today = dd + mm + yyyy
 
-    console.log(`cart.cartItems`, cart.cartItems)
-    console.log(`cart.shippingAddress`, cart.shippingAddress)
-
     let _orderItems = []
     cart.cartItems.map((item) => {
       return _orderItems.push({
@@ -54,7 +52,6 @@ const CartScreen = () => {
       })
     })
 
-    console.log(`_orderItems`, _orderItems)
     createOrder({
       variables: {
         userId: userInfo.userId,
@@ -73,7 +70,6 @@ const CartScreen = () => {
           ...cart,
           cartItems: []
         })
-        console.log(`res`, res)
       })
       .catch((error) => {
         setLoading(false)
@@ -93,7 +89,6 @@ const CartScreen = () => {
         <Loader />
       ) : (
         <>
-          {orderDone && <CustomToast variant="success" msg="ORER SUCCESSFUL" />}
           <h3>Shopping Cart</h3>
           <BackButton to="/" />
           <Row>

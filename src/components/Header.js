@@ -2,9 +2,12 @@ import React from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
+import { orderDoneState } from '../store/cart'
 import { userInfoState } from '../store/login'
+import CustomToast from './CustomToast'
 const Header = () => {
   const [userInfo] = useRecoilState(userInfoState)
+  const [orderDone, setOrderDone] = useRecoilState(orderDoneState)
 
   const logoutHandler = () => {
     window.location.replace('/logout')
@@ -18,6 +21,14 @@ const Header = () => {
         expand="lg"
         collapseOnSelect
       >
+        {orderDone && (
+          <CustomToast
+            variant="success"
+            msg="SUCCESSFULY ORDERED"
+            onClose={() => setOrderDone(false)}
+          />
+        )}
+
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Headphone Store</Navbar.Brand>

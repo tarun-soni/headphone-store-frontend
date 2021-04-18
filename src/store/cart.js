@@ -8,3 +8,8 @@ export const cartState = atom({
     shippingAddress: 'some random address'
   }
 })
+
+export const orderDoneState = atom({
+  key: 'orderDoneState',
+  default: false
+})

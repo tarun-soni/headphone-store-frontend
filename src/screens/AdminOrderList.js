@@ -1,5 +1,5 @@
 import BackButton from '../components/BackButton'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Container } from 'react-bootstrap'
 import Loader from '../components/Loader'
@@ -10,16 +10,12 @@ import { getDate } from '../getDate'
 const AdminOrderList = () => {
   const { loading, data, error } = useQuery(GET_ALL_ORDERS)
 
-  useEffect(() => {
-    console.log(`data`, data?.getAllOrders)
-  }, [data])
-
   if (error) console.log(`error`, error)
   return (
     <>
       <Container className="m3">
         <BackButton to="/" />
-        <h3>Users</h3>
+        <h3>All Orders</h3>
         {loading ? (
           <Loader />
         ) : (
@@ -42,13 +38,10 @@ const AdminOrderList = () => {
                   {/* <td>{order.user && order.user.name}</td> */}
                   <td>{order?.userId?.name}</td>
                   <td>{order?.paidAt && getDate(String(order.paidAt))}</td>
-                  <td>
-                    rupee
-                    {order?.totalPrice}
-                  </td>
+                  <td className="lspace-small">₹{order?.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      order.paidAt
+                      getDate(String(order.paidAt))
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}
@@ -61,7 +54,7 @@ const AdminOrderList = () => {
                     )}
                   </td>
                   <td className="d-flex justify-content-sm-around">
-                    <LinkContainer to={`/order/${order._id}/edit`}>
+                    <LinkContainer to={`/order/${order._id}`}>
                       <Button className="btn-sm" variant="light">
                         Details{' '}
                       </Button>
