@@ -6,7 +6,7 @@ import Loader from '../components/Loader'
 import { useRecoilState } from 'recoil'
 import { userInfoState } from '../store/login'
 
-import { Col, ListGroup, Image, Card, Row, Button } from 'react-bootstrap'
+import { Col, ListGroup, Image, Card, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const OrderScreen = () => {

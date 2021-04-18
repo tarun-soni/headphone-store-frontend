@@ -71,7 +71,7 @@ const SingleProductScreen = () => {
           <>
             <Row className="force-block">
               <Jumbotron
-                className="banner banner-wrap"
+                className="banner banner-wrap "
                 style={{
                   backgroundImage: `url(${data?.getSingleProduct?.bgimage})`,
                   backgroundSize: 'cover',

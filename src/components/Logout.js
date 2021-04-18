@@ -10,9 +10,9 @@ const Logout = () => {
   setUserInfo({
     userId: null,
     isAuthenticated: false,
-    isAdmin: null,
-    name: null,
-    email: null
+    isAdmin: false,
+    name: '',
+    email: ''
   })
   history.replace('/login')
   return <div>Logging Out...</div>

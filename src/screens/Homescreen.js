@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
-import React, { useEffect } from 'react'
-import { Col, Container, Row, Spinner } from 'react-bootstrap'
-import { useRecoilState } from 'recoil'
+import React from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
 import CustomCarousel from '../components/CustomCarousel'
 import CustomToast from '../components/CustomToast'
 import Header from '../components/Header'
@@ -21,19 +20,16 @@ const Homescreen = () => {
     GET_ALL_PRODUCTS
   )
 
-  // useEffect(() => {
-  //   console.log(`topProducts`, topProducts)
-  //   console.log(`all`, allProducts)
-  // }, [topProducts])
-
   if (allError || topError) {
+    console.log(`allError`, allError)
+    console.log(`topError`, topError)
   }
 
   return (
     <>
       <Header />
       <Container className="my-2 home-container">
-        {loading ? (
+        {loading || topLoading ? (
           <Loader />
         ) : allError || topError ? (
           <>

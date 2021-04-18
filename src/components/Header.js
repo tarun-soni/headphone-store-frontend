@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useRecoilState } from 'recoil'
 import { userInfoState } from '../store/login'
-import { plsLoginAlert } from '../store/alerts'
-import CustomToast from './CustomToast'
 const Header = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState)
-  const [showPlsLoginAlert, setShowPlsLoginAlert] = useRecoilState(
-    plsLoginAlert
-  )
+  const [userInfo] = useRecoilState(userInfoState)
 
   const logoutHandler = () => {
     window.location.replace('/logout')

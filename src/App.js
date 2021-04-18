@@ -7,11 +7,11 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import Routes from './Routes'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
 import { userInfoState } from './store/login'
 import { useRecoilState } from 'recoil'
-const API_URL = 'http://localhost:4000/graphql'
+const API_URL = 'https://headphone-store-backend.herokuapp.com/graphql'
 
 console.log(`${API_URL}`)
 
@@ -47,8 +47,6 @@ function App() {
           }
         })
         .then((res) => {
-          console.log('Token Check Success')
-
           setUserInfo({
             userId: res.data._id,
             isAuthenticated: true,
@@ -62,6 +60,7 @@ function App() {
           window.location.replace('/logout')
         })
     }
+    //eslint-disable-next-line
   }, [])
 
   return (
