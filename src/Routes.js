@@ -16,8 +16,10 @@ import CartScreen from './screens/CartScreen'
 import MyOrdersScreen from './screens/MyOrdersScreen'
 import AdminOrderList from './screens/AdminOrderList'
 import AdminProductList from './screens/AdminProductList'
+import RegisterScreen from './screens/LoginScreen/RegisterScreen'
 
 const LOGIN = '/login'
+const REGISTER = '/register'
 const LOGOUT = '/logout'
 const HOMESCREEN = '/homescreen'
 const SINGLE_PRODUCT = '/product/:id'
@@ -32,6 +34,7 @@ const Routes = () => {
           exact
           component={LoginScreen}
         ></LoggedOutRoute>
+        <Route path={REGISTER} exact component={RegisterScreen}></Route>
 
         <Route path="/" exact>
           <Redirect to={HOMESCREEN} />

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
-import { Redirect, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import Loader from '../../components/Loader'
 import { LOGIN_USER } from '../../graphql/user/mutations'
@@ -77,7 +77,12 @@ const Login = () => {
             className="login-form align-self-baseline"
             onSubmit={handleLogin}
           >
-            <Form.Label className='align-baseline"'>Email</Form.Label>
+            <Form.Label
+              className="align-self-baseline font-weight-bold"
+              htmlFor="email"
+            >
+              Email
+            </Form.Label>
             <Form.Control
               className="w-100 m-2 mb-4"
               type="email"
@@ -87,7 +92,10 @@ const Login = () => {
               value={email}
               onChange={(e) => onChange(e)}
             ></Form.Control>
-            <Form.Label className="align-self-baseline" htmlFor="email">
+            <Form.Label
+              className="align-self-baseline font-weight-bold mt-2"
+              htmlFor="password"
+            >
               Password
             </Form.Label>
             <Form.Control
@@ -99,9 +107,42 @@ const Login = () => {
               value={password}
               onChange={(e) => onChange(e)}
             ></Form.Control>
-            <Button type="submit" variant="success" className="w-100 mt-4">
+            <Button
+              type="submit"
+              variant="primary"
+              className="w-100 mt-4 lspace-small"
+            >
               Login
             </Button>
+            <h6 className="my-2">
+              Don't have an account? <Link to={'/register'}>Sign up </Link>
+            </h6>
+            <div>
+              <Button
+                variant="primary"
+                className=" my-2 mx-1"
+                onClick={() => {
+                  setFormData({
+                    email: 'name1@hstore.com',
+                    password: '1212'
+                  })
+                }}
+              >
+                Populate Customer values
+              </Button>
+              <Button
+                variant="primary"
+                className="my-2 mx-1"
+                onClick={() => {
+                  setFormData({
+                    email: 'adminproducts@hstore.com',
+                    password: 'admin1212'
+                  })
+                }}
+              >
+                Populate Admin values
+              </Button>
+            </div>
           </Form>
           <div className="features">
             <div className="feature">

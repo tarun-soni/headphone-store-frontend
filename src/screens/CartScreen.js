@@ -16,6 +16,7 @@ import BackButton from '../components/BackButton'
 import CustomToast from '../components/CustomToast'
 import Loader from '../components/Loader'
 import { CREATE_ORDER } from '../graphql/order/mutation'
+import { GET_MY_ORDERS } from '../graphql/order/queries'
 import { cartState, orderDoneState } from '../store/cart'
 import { userInfoState } from '../store/login'
 
@@ -60,7 +61,13 @@ const CartScreen = () => {
         shippingAddress: cart.shippingAddress,
         isPaid: true,
         paidAt: today
-      }
+      },
+      refetchQueries: [
+        {
+          query: GET_MY_ORDERS,
+          variables: { id: userInfo.userId }
+        }
+      ]
     })
       .then((res) => {
         setLoading(false)
