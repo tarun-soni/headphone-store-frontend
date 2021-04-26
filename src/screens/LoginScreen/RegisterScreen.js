@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import CustomToast from '../../components/CustomToast'
 import Loader from '../../components/Loader'
