@@ -6,6 +6,8 @@
 
 [my-headphone-store.netlify.app](https://my-headphone-store.netlify.app/)
 
+[BACKEND REPO LINK](https://github.com/tarun-soni/headphone-store-backend)
+
 - LIBRARIES AND TECHNOLOGIES USED
   - ReactJS
   - Recoil-js
